@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");  // express ....
 const mongoose = require("mongoose"); // database ....
 const cors = require("cors");
@@ -28,9 +29,29 @@ app.use(userRoutes);
 const adminRoutes = require("./src/routes/AdminRoutes");
 app.use(adminRoutes);
 
+// expense routes
+const expenseRoutes = require("./src/routes/ExpenseRoutes");
+app.use("/expense",expenseRoutes);
+
+// income routes
+const incomeRoutes = require("./src/routes/IncomeRoutes");
+app.use("/income",incomeRoutes);
+
+// transaction routes
+const transactionRoutes = require("./src/routes/TransactionRoutes");
+app.use("/transaction",transactionRoutes);
+
 // category routes
 const categoryRoutes = require("./src/routes/CategoryRoutes");
 app.use("/category",categoryRoutes);
+
+// balance routes
+const balanceRoutes = require("./src/routes/BalanceRoutes");
+app.use("/balance",balanceRoutes);
+
+// report routes
+const reportRoutes = require("./src/routes/ReportRoutes");
+app.use("/report",reportRoutes);
 
 // subcategory routes
 const subcategoryRoutes = require("./src/routes/SubcategoryRoutes");
@@ -39,6 +60,10 @@ app.use("/subcategory",subcategoryRoutes);
 // account routes
 const accountRoutes = require("./src/routes/AccountRoutes");
 app.use("/account",accountRoutes);
+
+// vendor routes
+const vandorRoutes = require("./src/routes/VendorRoutes");
+app.use("/vendor",vandorRoutes);
 
 // database connectivity
 mongoose.connect("mongodb://127.0.0.1:27017/expense_tracker").then(() => {

@@ -37,7 +37,6 @@ const getSubcategoriesByCategoryId = async (req,res) => {
     }
 }
 
-
 module.exports = {
     addsubcategory,getSubcategoriesByCategoryId
 }

@@ -14,6 +14,10 @@ const userSchema = new Schema({
         type: String,
         unique: true,
     },
+    role:{
+        type: String,
+        default:"user",
+    },
     roleId:{
         type:Schema.Types.ObjectId,
         ref:"roles"

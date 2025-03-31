@@ -1,3 +1,4 @@
+const AdminModel = require("../models/AdminModel");
 const adminModel = require("../models/AdminModel");
 const bcrypt = require("bcrypt");
 
@@ -121,6 +122,53 @@ const deleteAdmin = async (req,res) => {
     }
 }
 
+// add admin api
+const addAdmin = async (req,res) => {
+    try {
+
+        const addadmin = await adminModel.create(req.body);
+        res.status(201).json({
+            message: "Add Admin successfully...",
+            data:addadmin
+        })
+        
+    } catch (err) {
+        res.status(500).json({
+            message:"Error ....",
+            data:err
+        })
+    }
+}
+
+// update admin api
+const updateAdmin = async (req,res) => {
+    try {
+
+        const updateadmin = await AdminModel.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            { new : true}
+        )
+
+        res.status(200).json({
+            message:"updated Admin data sucessfully...",
+            data:updateadmin
+        })
+        
+    } catch (err) {
+        res.status(500).json({
+            message:"Error ....",
+            data:err
+        })
+    }
+}
+
 module.exports={
-    signupAdmin,loginAdmin,getAllAdmin,getAdminbyId,deleteAdmin
+    signupAdmin,
+    loginAdmin,
+    getAllAdmin,
+    getAdminbyId,
+    deleteAdmin,
+    addAdmin,
+    updateAdmin
 }
