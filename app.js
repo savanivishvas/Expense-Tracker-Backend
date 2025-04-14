@@ -53,17 +53,6 @@ app.use("/balance",balanceRoutes);
 const reportRoutes = require("./src/routes/ReportRoutes");
 app.use("/report",reportRoutes);
 
-// subcategory routes
-const subcategoryRoutes = require("./src/routes/SubcategoryRoutes");
-app.use("/subcategory",subcategoryRoutes);
-
-// account routes
-const accountRoutes = require("./src/routes/AccountRoutes");
-app.use("/account",accountRoutes);
-
-// vendor routes
-const vandorRoutes = require("./src/routes/VendorRoutes");
-app.use("/vendor",vandorRoutes);
 
 // database connectivity
 mongoose.connect("mongodb://127.0.0.1:27017/expense_tracker").then(() => {

@@ -10,7 +10,7 @@ const loginAdmin = async (req,res) => {
         const password = req.body.password;
 
         const foundAdminFormEmail = await adminModel.findOne({email:email}).populate("roleId");
-        console.log(foundAdminFormEmail);
+        // console.log(foundAdminFormEmail);
         
         if(foundAdminFormEmail != null){
         

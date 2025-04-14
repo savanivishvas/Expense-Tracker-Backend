@@ -78,9 +78,28 @@ const updateIncome = async (req,res) => {
     }
 }
 
+// last 30 days income data
+const last30daysincome = async (req,res) => {
+    try {
+
+        const income = await incomeModel.find().sort({transactionDate: -1}).limit(10);
+        res.status(200).json({
+            message:"last 30 days income data",
+            data:income
+        })
+        
+    } catch (err) {
+        res.status(500).json({
+            message:"last 30 days income data",
+            data:err
+        })
+    }
+}
+
 module.exports = {
     addIncome,
     getAllIncome,
     deleteIncome,
-    updateIncome
+    updateIncome,
+    last30daysincome
 }

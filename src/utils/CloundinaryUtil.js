@@ -9,7 +9,9 @@ const uploadFileToCloudinary = async (file) => {
         api_secret: process.env.cloud_api_secret
     })
 
-    const cloundinaryResponse = await cloundinary.uploader.upload(file.path);
+    const cloundinaryResponse = await cloundinary.uploader.upload(file.path,{
+        timeout: 220000,
+    });
     return cloundinaryResponse;
 
 };

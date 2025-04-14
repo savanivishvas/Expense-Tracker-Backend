@@ -1,8 +1,27 @@
 const userModel = require("../models/UserModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-// const mailUtil = require("../utils/MailUtil");
+const mailUtil = require("../utils/MailUtil");
 const secret = "secret";
+const multer = require("multer");
+const cloudinaryUtil = require("../utils/CloundinaryUtil");
+const UserModel = require("../models/UserModel");
+
+// for image
+const storage = multer.diskStorage({
+  destination: "./uploads",
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  },
+});
+  
+//multer object....
+  
+const upload = multer({
+  storage: storage,
+  //fileFilter:
+}).single("profilepicURL");
+  
 
 // login api
 const loginUser = async (req,res) => {
@@ -157,23 +176,43 @@ const deleteUser = async (req,res) => {
 
 // add profilepicturewithfilr
 const addUserWithFile = async (req, res) => {
-  upload(req, res, (err) => {
-    if (err) {
-      res.status(500).json({
-        message: err.message,
+    try {
+      // Wrap multer upload in a promise
+      await new Promise((resolve, reject) => {
+        upload(req, res, (err) => {
+          if (err) {
+            console.log("Multer Error:", err);
+            reject(err);
+          } else {
+            resolve();
+          }
+        });
       });
-    } else {
-      // database data store
-      //cloundinary
-      console.log(req.body);
+  
+      if (!req.file) {
+        return res.status(400).json({ message: "No file uploaded" });
+      }
+  
+      // Upload file to Cloudinary
+      const cloudinaryResponse = await cloudinaryUtil.uploadFileToCloudinary(req.file);
+     //   console.log("Cloudinary Response:", cloudinaryResponse);
+  
+      // Store file URL in request body
+      req.body.profilepicURL = cloudinaryResponse.secure_url;
+  
+      // Save user to database
+      const userWithProfile = await userModel.create(req.body);
+  
       res.status(200).json({
-        message: "File uploaded successfully",
-        data: req.file,
+        message: "Profile picture uploaded successfully",
+        data: userWithProfile,
       });
+    } catch (error) {
+      console.error("Error in addUserWithFile:", error);
+      res.status(500).json({ message: "Something went wrong", error });
     }
-  });
-};
-
+  };
+  
 // forgot password api
 const forgotpassword = async (req,res) => {
 
@@ -231,4 +270,5 @@ module.exports = {
     deleteUser,
     forgotpassword,
     resentpassword,
+    addUserWithFile
 }

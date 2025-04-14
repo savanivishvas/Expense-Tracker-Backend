@@ -18,6 +18,9 @@ const userSchema = new Schema({
         type: String,
         default:"user",
     },
+    profilepicURL:{
+        type:String,
+    },
     roleId:{
         type:Schema.Types.ObjectId,
         ref:"roles"

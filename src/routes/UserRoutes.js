@@ -11,6 +11,7 @@ routes.patch("/user/updateuser/:id",userControllers.updateUserById);
 routes.delete("/user/users/:id",userControllers.deleteUser);
 routes.post("/user/forgotpassword",userControllers.forgotpassword);
 routes.post("/user/resetpassword",userControllers.resentpassword);
+routes.post("/user/adduserwithfile",userControllers.addUserWithFile);
 
 // admin routes
 routes.post("/admin/adminsignup",adminControllers.signupAdmin);

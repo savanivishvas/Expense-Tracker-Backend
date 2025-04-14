@@ -1,3 +1,4 @@
+const ExpenseModel = require("../models/ExpenseModel");
 const expenseModel = require("../models/ExpenseModel");
 
 // create expense api
@@ -54,6 +55,7 @@ const deleteExpenceById = async (req , res) => {
     }
 }
 
+// updateexpense api
 const updateExpense = async (req,res) => {
 
     try {
@@ -97,7 +99,25 @@ const getExpenseByUserId = async (req,res) =>{
     }
 }
 
-// updateexpense api
+// last 30 days expense
+
+const last30daysexpense = async (req,res) => {
+    try {
+
+        const expense =  await ExpenseModel.find().sort({ transationData : -1}).limit(10);
+        res.status(200).json({
+            message:"last 30  days transactions",
+            data:expense
+        })
+        
+    } catch (err) {
+        res.status(500).json({
+            message:"Error....",
+            data:err
+        })
+    }
+}
+
 
 module.exports = {
     addExpense,
@@ -105,4 +125,5 @@ module.exports = {
     updateExpense,
     deleteExpenceById,
     getExpenseByUserId,
+    last30daysexpense
 };
