@@ -77,11 +77,11 @@ const signupUser = async (req,res) => {
         const createdUser = await userModel.create(req.body);
         // console.log(createdUser);
         
-        // await mailUtil.sendingMail(
-        //     createdUser.email,
-        //     "welcome to Expense Tracker",
-        //     "this is welcome mail"
-        //   );
+        await mailUtil.sendingMail(
+            createdUser.email,
+            "welcome to Expense Tracker",
+            "this is welcome mail"
+          );
           
         res.status(201).json({
             message:"user created successfully....",
